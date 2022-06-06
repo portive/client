@@ -1,9 +1,17 @@
 {
   "name": "@portive/client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Client for Portive API",
   "main": ".dist/src/index.js",
   "license": "MIT",
+  "types": ".dist/src/index.d.ts",
+  "files": [
+    ".dist/**/*"
+  ],
+  "dependencies": {
+    "@portive/api-types": "^6.0.0",
+    "axios": "^0.27.2"
+  },
   "devDependencies": {
     "@types/jest": "^27",
     "@types/node": "^17.0.40",
@@ -43,12 +51,5 @@
     "publish:npm": "yarn publish:npm:patch",
     "publish:npm:patch": "yarn build:npm:once && yarn version --patch && yarn publish --non-interactive || echo '\"npm publish --access=public\" to publish to npm'",
     "-- end": "# end"
-  },
-  "types": ".dist/src/index.d.ts",
-  "files": [
-    ".dist/**/*"
-  ],
-  "dependencies": {
-    "@portive/api-types": "^6.0.0"
   }
 }
