@@ -13,7 +13,7 @@ import { UploadProgressEvent } from "./types"
 export * from "./create-client-file"
 export * from "./resize"
 
-const DEFAULT_ORIGIN_URL = "http://api.portive.com"
+const DEFAULT_ORIGIN_URL = "https://api.portive.com"
 const UPLOAD_PATH = "/api/v1/upload"
 
 if (!UPLOAD_PATH.startsWith("/"))
