@@ -27,13 +27,13 @@ async function normalizeAuthToken(
 }
 
 async function getUploadPolicy({
-  authToken,
   apiOriginUrl = DEFAULT_ORIGIN_URL,
+  authToken,
   path,
   file,
 }: {
-  authToken: string | (() => Promisable<string>)
   apiOriginUrl?: string
+  authToken: string | (() => Promisable<string>)
   path: string
   file: File | ClientFile
 }): Promise<UploadFileResponse> {
@@ -74,14 +74,14 @@ async function getUploadPolicy({
 }
 
 export async function uploadFile({
-  authToken,
   apiOriginUrl = DEFAULT_ORIGIN_URL,
+  authToken,
   path,
   file,
   onProgress,
 }: {
-  authToken: string | (() => Promisable<string>)
   apiOriginUrl?: string
+  authToken: string | (() => Promisable<string>)
   path: string
   file: File | ClientFile
   onProgress?: (e: UploadProgressEvent) => void
