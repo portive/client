@@ -1,0 +1,3 @@
+export const DEMO_AUTH_TOKEN =
+  // eslint-disable-next-line no-secrets/no-secrets
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkZuUUhJbEM1a2k0d28wNkcifQ.eyJwYXRoIjoiKiovKiIsImlhdCI6MTY1NDU2MzE1NCwiZXhwIjoxNjg2MTIwNzU0fQ.jOfi1iTy_usCu_vHTSZ4UwtEiLP0YKBiTPx3qX6Q1FQ"
