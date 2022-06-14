@@ -1,6 +1,6 @@
 {
   "name": "@portive/client",
-  "version": "2.0.0",
+  "version": "7.0.0",
   "description": "Client for Portive API",
   "license": "MIT",
   "files": [
@@ -87,8 +87,9 @@
     "build:cjs": "tsc -p tsconfig.build-cjs.json",
     "build:mjs": "tsc -p tsconfig.build-mjs.json",
     "-- publish npm": "# publish npm package",
-    "publish:npm": "yarn build:once ",
-    "publish:npm:patch": "yarn build:npm:once && yarn version --patch && yarn publish --non-interactive || echo '\"npm publish --access=public\" to publish to npm'",
+    "publish:npm": "yarn build:once && yarn publish || yarn publish:first",
+    "publish:npm:patch": "yarn build:once && yarn version --patch && yarn publish --non-interactive || yarn publish:first",
+    "publish:first": "echo 'IMPORTANT INSTRUCTIONS: This is first publish so please use:\n\n\"npm publish --access=public\"'",
     "-- next": "# NextJs",
     "start:dev": "DOTENV=.env/dev.env next dev -p 3992",
     "-- end": "# end"
