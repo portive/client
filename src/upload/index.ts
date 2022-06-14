@@ -35,8 +35,10 @@ export async function getUploadPolicy({
       ...clientFileInfo
     } = clientFile
 
+    const authToken = await client.getAuthToken()
+
     const uploadProps: UploadProps = {
-      authToken: client.authToken,
+      authToken,
       clientFileInfo,
     }
 
