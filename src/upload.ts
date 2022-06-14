@@ -1,49 +1,29 @@
 import axios, { AxiosResponse } from "axios"
 import {
-  ClientFile,
   HostedFileInfo,
   JSendError,
   JSendSuccess,
   UploadFileResponse,
   UploadProps,
 } from "@portive/api-types"
-import { Promisable } from "type-fest"
-import { createClientFile } from "./create-client-file"
+import { Client } from "./client"
+import { getClientFile } from "./create-client-file"
 import { UploadProgressEvent } from "./types"
+import { UPLOAD_PATH } from "./constants"
 export * from "./create-client-file"
 export * from "./resize"
 
-const DEFAULT_ORIGIN_URL = "https://api.portive.com"
-const UPLOAD_PATH = "/api/v1/upload"
-
-if (!UPLOAD_PATH.startsWith("/"))
-  throw new Error("UPLOAD_PATH should start with a '/'")
-
-async function normalizeAuthToken(
-  authToken: string | (() => Promisable<string>)
-): Promise<string> {
-  if (typeof authToken === "string") return authToken
-  return await authToken()
-}
-
-async function getUploadPolicy({
-  apiOriginUrl = DEFAULT_ORIGIN_URL,
-  authToken,
-  path,
+export async function getUploadPolicy({
+  client,
   file,
 }: {
-  apiOriginUrl?: string
-  authToken: string | (() => Promisable<string>)
-  path: string
-  file: File | ClientFile
+  client: Client
+  file: File
 }): Promise<UploadFileResponse> {
   try {
-    if (apiOriginUrl.endsWith("/"))
-      throw new Error("apiOriginUrl should not end with a '/'")
+    const clientFile = await getClientFile(file)
 
-    const clientFile = await createClientFile(file)
-
-    const apiGetPolicyUrl = `${apiOriginUrl}${UPLOAD_PATH}`
+    const apiGetPolicyUrl = `${client.apiOrigin}${UPLOAD_PATH}`
 
     const {
       // disable to allow eating a property
@@ -56,10 +36,10 @@ async function getUploadPolicy({
     } = clientFile
 
     const uploadProps: UploadProps = {
-      authToken: await normalizeAuthToken(authToken),
-      path,
+      authToken: client.authToken,
       clientFileInfo,
     }
+
     const axiosResponse: AxiosResponse<UploadFileResponse> = await axios.post(
       apiGetPolicyUrl,
       uploadProps
@@ -74,24 +54,18 @@ async function getUploadPolicy({
 }
 
 export async function uploadFile({
-  apiOriginUrl = DEFAULT_ORIGIN_URL,
-  authToken,
-  path,
+  client,
   file,
   onProgress,
 }: {
-  apiOriginUrl?: string
-  authToken: string | (() => Promisable<string>)
-  path: string
-  file: File | ClientFile
+  client: Client
+  file: File
   onProgress?: (e: UploadProgressEvent) => void
 }): Promise<JSendError | JSendSuccess<HostedFileInfo>> {
-  const clientFile = await createClientFile(file)
+  const clientFile = await getClientFile(file)
 
   const uploadPolicyResponse = await getUploadPolicy({
-    authToken,
-    apiOriginUrl,
-    path,
+    client,
     file,
   })
 

@@ -1,4 +1,4 @@
-import { resizeIn, resizeInWidth, resizeInHeight } from "../resize"
+import { resizeIn, resizeInWidth, resizeInHeight } from ".."
 
 describe("resize", () => {
   describe("resizeIn", () => {

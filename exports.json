@@ -1,0 +1,8 @@
+{
+  "description": "Used with @thesunny/presets, 'yarn preset exports'",
+  "instructions": "add exports & typesVersions mappings for package.json to 'exports' below",
+  "exports": {
+    ".": "src/index.ts",
+    "auth": "src/auth/index.ts"
+  }
+}

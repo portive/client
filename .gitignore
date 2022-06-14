@@ -25,3 +25,6 @@ tsconfig.tsbuildinfo
 
 # ignore .temp directory used during testing
 .temp/
+# ignore dotenv environment variables
+# ignore build/dist directories
+# ignore Next.js directory

@@ -55,7 +55,7 @@ const CLIENT_FILE_MAP = new WeakMap<File, ClientFile>()
  * - size: [width, height]
  * - objectUrl: a URL that can be used as the image src before the image is uploaded
  */
-export async function createClientFile(
+export async function getClientFile(
   file: File | ClientFile
 ): Promise<ClientFile> {
   if (!(file instanceof File)) return file

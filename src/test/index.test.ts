@@ -1,5 +1,7 @@
 export {}
 
 describe("index", () => {
-  it("should pass", async () => {})
+  it("should pass", async () => {
+    /* empty */
+  })
 })
