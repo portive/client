@@ -1,4 +1,4 @@
-import { DEFAULT_ORIGIN_URL } from "../constants"
+import { DEFAULT_ORIGIN_URL } from "../upload/constants"
 
 type ClientOptions = {
   authToken: string

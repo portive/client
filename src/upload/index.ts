@@ -6,12 +6,12 @@ import {
   UploadFileResponse,
   UploadProps,
 } from "@portive/api-types"
-import { Client } from "./client"
-import { getClientFile } from "./create-client-file"
+import { Client } from "../client"
+import { createClientFile } from "./create-client-file"
 import { UploadProgressEvent } from "./types"
 import { UPLOAD_PATH } from "./constants"
 export * from "./create-client-file"
-export * from "./resize"
+export * from "../resize"
 
 export async function getUploadPolicy({
   client,
@@ -21,7 +21,7 @@ export async function getUploadPolicy({
   file: File
 }): Promise<UploadFileResponse> {
   try {
-    const clientFile = await getClientFile(file)
+    const clientFile = await createClientFile(file)
 
     const apiGetPolicyUrl = `${client.apiOrigin}${UPLOAD_PATH}`
 
@@ -62,7 +62,7 @@ export async function uploadFile({
   file: File
   onProgress?: (e: UploadProgressEvent) => void
 }): Promise<JSendError | JSendSuccess<HostedFileInfo>> {
-  const clientFile = await getClientFile(file)
+  const clientFile = await createClientFile(file)
 
   const uploadPolicyResponse = await getUploadPolicy({
     client,

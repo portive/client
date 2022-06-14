@@ -11,7 +11,7 @@
 /* Disable checking for `require` as we need it to make mocking of fetch work */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import axios from "axios"
-import { Client, getClientFile, getUploadPolicy, uploadFile } from "../.."
+import { Client, createClientFile, getUploadPolicy, uploadFile } from "../.."
 import { createAuthToken } from "@portive/auth"
 import { promised } from "./test-utils"
 
@@ -40,7 +40,7 @@ describe("fetchUploadPolicy", () => {
   })
 
   it("should get client file and return a reference equal object if provided the same file", async () => {
-    const clientFile1 = await getClientFile(textFile)
+    const clientFile1 = await createClientFile(textFile)
     expect(clientFile1).toEqual({
       type: "generic",
       filename: "alphabet.txt",
@@ -50,10 +50,10 @@ describe("fetchUploadPolicy", () => {
       objectUrl: {},
     })
 
-    const clientFile2 = await getClientFile(textFile)
+    const clientFile2 = await createClientFile(textFile)
     expect(clientFile1 === clientFile2).toBe(true)
 
-    const helloClientFile = await getClientFile(helloFile)
+    const helloClientFile = await createClientFile(helloFile)
     expect(clientFile1 === helloClientFile).toBe(false)
   })
 

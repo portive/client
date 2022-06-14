@@ -49,13 +49,14 @@ const CLIENT_FILE_MAP = new WeakMap<File, ClientFile>()
 
 /**
  * Takes a `File` object and returns a `ClientFile` object with some useful
- * properties.
+ * properties. The values are cached in the WeakMap `CLIENT_FILE_MAP` because
+ * of the expensive `getImageSize` function.
  *
  * - type: `image` or `generic`
  * - size: [width, height]
  * - objectUrl: a URL that can be used as the image src before the image is uploaded
  */
-export async function getClientFile(
+export async function createClientFile(
   file: File | ClientFile
 ): Promise<ClientFile> {
   if (!(file instanceof File)) return file
