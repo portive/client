@@ -1,6 +1,6 @@
 {
   "name": "@portive/client",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "Client for Portive API",
   "license": "MIT",
   "files": [
