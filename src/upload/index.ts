@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
 import {
   HostedFileInfo,
   JSendError,
@@ -23,7 +23,7 @@ export async function getUploadPolicy({
   try {
     const clientFile = await createClientFile(file)
 
-    const apiGetPolicyUrl = `${client.apiOrigin}${UPLOAD_PATH}`
+    // const apiGetPolicyUrl = `${client.apiOrigin}${UPLOAD_PATH}`
 
     const {
       // disable to allow eating a property
@@ -35,18 +35,24 @@ export async function getUploadPolicy({
       ...clientFileInfo
     } = clientFile
 
-    const authToken = await client.getAuthToken()
-
-    const uploadProps: UploadProps = {
-      authToken,
-      clientFileInfo,
-    }
-
-    const axiosResponse: AxiosResponse<UploadFileResponse> = await axios.post(
-      apiGetPolicyUrl,
-      uploadProps
+    const response = await client.post<UploadProps, UploadFileResponse>(
+      UPLOAD_PATH,
+      { clientFileInfo }
     )
-    return axiosResponse.data
+    return response
+
+    // const authToken = await client.getAuthToken()
+
+    // const uploadProps: UploadProps = {
+    //   authToken,
+    //   clientFileInfo,
+    // }
+
+    // const axiosResponse: AxiosResponse<UploadFileResponse> = await axios.post(
+    //   apiGetPolicyUrl,
+    //   uploadProps
+    // )
+    // return axiosResponse.data
   } catch (e) {
     return {
       status: "error",

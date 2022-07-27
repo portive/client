@@ -1,9 +1,13 @@
 import { DEFAULT_ORIGIN_URL } from "../upload/constants"
+import { Resolvable, resolve } from "resolvable-value"
+import { JsonObject } from "type-fest"
+import axios, { AxiosResponse } from "axios"
 
-export type AuthTokenable = string | (() => Promise<string>) | (() => string)
+// export type AuthTokenable = string | (() => Promise<string>) | (() => string)
 
 export type ClientOptions = {
-  authToken: AuthTokenable
+  apiKey?: Resolvable<string>
+  authToken?: Resolvable<string>
   apiOrigin?: string
 }
 
@@ -31,22 +35,54 @@ export class Client {
    * always be a string. It's named to imply that whatever it is can be
    * turned into an `authToken`.
    */
-  authTokenable: AuthTokenable
+  unresolvedApiKey: undefined | Resolvable<string>
+  unresolvedAuthToken: undefined | Resolvable<string>
   apiOrigin: string
 
-  constructor({ authToken, apiOrigin = DEFAULT_ORIGIN_URL }: ClientOptions) {
+  constructor({
+    apiKey,
+    authToken,
+    apiOrigin = DEFAULT_ORIGIN_URL,
+  }: ClientOptions) {
+    if (apiKey == null && authToken == null) {
+      throw new Error(
+        `apiKey or authToken must be defined but neither are defined`
+      )
+    }
     if (apiOrigin.endsWith("/"))
       throw new Error("apiOrigin should not end with a '/'")
     if (!apiOrigin.startsWith("http"))
       throw new Error(`Expected apiOrigin to start with http`)
-    this.authTokenable = authToken
+    // this.authTokenable = authToken
+    this.unresolvedApiKey = apiKey
+    this.unresolvedAuthToken = authToken
     this.apiOrigin = apiOrigin
   }
 
-  async getAuthToken(): Promise<string> {
-    const { authTokenable: _authToken } = this
-    if (typeof _authToken === "string") return _authToken
-    const authTokenValue = await _authToken()
-    return authTokenValue
+  async post<
+    P extends { apiKey?: string; authToken?: string } & JsonObject,
+    R extends JsonObject
+  >(path: string, data: P): Promise<R> {
+    if (!path.startsWith("/"))
+      throw new Error(
+        `Expected path to start with "/" but is ${JSON.stringify(path)}`
+      )
+    const url = `${this.apiOrigin}${path}`
+    const axiosResponse = await axios.post<R, AxiosResponse<R>, P>(url, {
+      apiKey: await this.getApiKey(),
+      authToken: await this.getAuthToken(),
+      ...data,
+    })
+    return axiosResponse.data
+  }
+
+  async getApiKey(): Promise<string | undefined> {
+    return this.unresolvedApiKey ? resolve(this.unresolvedApiKey) : undefined
+  }
+
+  async getAuthToken(): Promise<string | undefined> {
+    return this.unresolvedAuthToken
+      ? resolve(this.unresolvedAuthToken)
+      : undefined
   }
 }
