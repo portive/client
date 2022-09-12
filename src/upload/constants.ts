@@ -1,4 +1,4 @@
-export const DEFAULT_ORIGIN_URL = "https://api.portive.com"
+export const DEFAULT_ORIGIN_URL = "https://api.for.cloud"
 export const UPLOAD_PATH = "/api/v1/upload"
 
 /**

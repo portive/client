@@ -67,7 +67,7 @@ describe("fetchUploadPolicy", () => {
     )
     const client = new Client({
       authToken,
-      apiOrigin: "https://api.fake-unit-test-endpoint.portive.com",
+      apiOrigin: "https://api.fake-unit-test-endpoint.for.cloud",
     })
 
     $axios.post.mockResolvedValueOnce(
@@ -76,7 +76,7 @@ describe("fetchUploadPolicy", () => {
         data: {
           type: "image",
           size: [1024, 1536],
-          url: "https://files.dev.portive.com/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+          url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
         },
       })
     )
@@ -88,7 +88,7 @@ describe("fetchUploadPolicy", () => {
 
     const axiosArgs = $axios.post.mock.calls[0]
     expect(axiosArgs[0]).toEqual(
-      "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
+      "https://api.fake-unit-test-endpoint.for.cloud/api/v1/upload"
     )
     expect(axiosArgs[1]).toMatchObject({
       clientFileInfo: {
@@ -102,7 +102,7 @@ describe("fetchUploadPolicy", () => {
     expect(result).toEqual({
       type: "image",
       size: [1024, 1536],
-      url: "https://files.dev.portive.com/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+      url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
     })
   })
 
@@ -116,7 +116,7 @@ describe("fetchUploadPolicy", () => {
     )
     const client = new Client({
       authToken,
-      apiOrigin: "https://api.fake-unit-test-endpoint.portive.com",
+      apiOrigin: "https://api.fake-unit-test-endpoint.for.cloud",
     })
 
     $axios.post
@@ -130,13 +130,13 @@ describe("fetchUploadPolicy", () => {
           data: {
             status: "success",
             data: {
-              apiUrl: "https://s3.amazonaws.com/portive-dev-bucket",
+              apiUrl: "https://s3.amazonaws.com/forcloud-dev-bucket",
               fileUrl:
-                "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+                "https://files.dev.for.cloud/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
               formFields: {
                 acl: "public-read",
                 key: "f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
-                bucket: "portive-dev-bucket",
+                bucket: "forcloud-dev-bucket",
                 "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
                 "X-Amz-Credential":
                   "AKIA_FAKE_CREDENTIALS/20220614/us-east-1/s3/aws4_request",
@@ -160,13 +160,13 @@ describe("fetchUploadPolicy", () => {
       status: "success",
       data: {
         type: "generic",
-        url: "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+        url: "https://files.dev.for.cloud/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
       },
     })
 
     const policyArgs = $axios.post.mock.calls[0]
     expect(policyArgs[0]).toEqual(
-      "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
+      "https://api.fake-unit-test-endpoint.for.cloud/api/v1/upload"
     )
     expect(policyArgs[1]).toMatchObject({
       clientFileInfo: {
@@ -178,7 +178,9 @@ describe("fetchUploadPolicy", () => {
     })
 
     const uploadArgs = $axios.post.mock.calls[1]
-    expect(uploadArgs[0]).toEqual("https://s3.amazonaws.com/portive-dev-bucket")
+    expect(uploadArgs[0]).toEqual(
+      "https://s3.amazonaws.com/forcloud-dev-bucket"
+    )
     expect(uploadArgs[1]).toEqual(expect.any(FormData))
     expect(uploadArgs[2]).toEqual({ onUploadProgress: expect.any(Function) })
   })
