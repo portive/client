@@ -2,7 +2,7 @@ import {
   ClientFile,
   ClientGenericFile,
   ClientImageFile,
-} from "@portive/api-types"
+} from "@forcloud/api-types"
 
 /**
  * Array of supported image content types.

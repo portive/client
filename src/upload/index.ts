@@ -5,7 +5,7 @@ import {
   JSendSuccess,
   UploadFileResponse,
   UploadProps,
-} from "@portive/api-types"
+} from "@forcloud/api-types"
 import { Client } from "../client"
 import { createClientFile } from "./create-client-file"
 import { UploadProgressEvent } from "./types"

@@ -12,7 +12,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import axios from "axios"
 import { Client, createClientFile, getUploadPolicy, uploadFile } from "../.."
-import { createAuthToken } from "@portive/auth"
+import { createAuthToken } from "@forcloud/auth"
 import { promised } from "./test-utils"
 
 jest.mock("axios")

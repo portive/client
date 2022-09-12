@@ -2,11 +2,11 @@
 
 ### Installing
 
-To install `@portive/client` with Yarn or NPM, either:
+To install `@forcloud/client` with Yarn or NPM, either:
 
 ```bash
-yarn add @portive/client
-npm install --save @portive/client
+yarn add @forcloud/client
+npm install --save @forcloud/client
 ```
 
 ## Usage

@@ -1,4 +1,4 @@
-import { ClientFile } from "@portive/api-types"
+import { ClientFile } from "@forcloud/api-types"
 
 export type UploadProgressEvent = {
   sentBytes: number

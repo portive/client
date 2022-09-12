@@ -3,7 +3,7 @@ import Head from "next/head"
 import { useCallback, useState } from "react"
 import { Client, uploadFile } from "~/src"
 import { env } from "~/lib/server-env"
-import { HostedFileInfo } from "@portive/api-types"
+import { HostedFileInfo } from "@forcloud/api-types"
 
 export const getServerSideProps = Web.getServerSideProps(
   s.object({}),

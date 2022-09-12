@@ -1,10 +1,10 @@
-# @portive/client
+# @forcloud/client
 
 ## Usage
 
 ```typescript
-import { creatAuthToken } from "@portive/auth"
-import { Client, uploadFile } from "@portive/client"
+import { creatAuthToken } from "@forcloud/auth"
+import { Client, uploadFile } from "@forcloud/client"
 
 const authToken = createAuthToken(API_KEY, {
   path: "on/$yyyy/$mm/$dd",
@@ -24,7 +24,7 @@ const uploadResult = await uploadFile({
 
 ## Design Strategy
 
-- Separate auth and client: Keep `@portive/auth` separate from `@portive/client` because once we've developed a component, we don't need to import `@portive/client` explicitly anymore.
+- Separate auth and client: Keep `@forcloud/auth` separate from `@forcloud/client` because once we've developed a component, we don't need to import `@forcloud/client` explicitly anymore.
 - `authToken` option always provided on Component: When a Component is created that uses Portive, it needs to take `authToken` as part of its arguments. It is not necessary to take `apiOrigin` because that is only required if you aren't hitting the production endpoint. When an end-developer uses the Component, they will likely never be hitting a non-production endpoint.
 - Don't pass in Client to Component: Because `authToken` is the only necessary argument, we don't ask the Component user to pass in a Client. It's an unnecessary extra step.
 - Do have a `Client` object though. That being said, we do have a `Client` object that needs to be created. We have this because it helps the Component developer in these ways:
