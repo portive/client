@@ -11,7 +11,13 @@
 /* Disable checking for `require` as we need it to make mocking of fetch work */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import axios from "axios"
-import { Client, createClientFile, getUploadPolicy, uploadFile } from "../.."
+import {
+  Client,
+  createClientFile,
+  getUploadPolicy,
+  getUploadPolicyFromClientFileInfo,
+  uploadFile,
+} from "../.."
 import { createAuthToken } from "@forcloud/auth"
 import { promised } from "./test-utils"
 
@@ -55,6 +61,60 @@ describe("fetchUploadPolicy", () => {
 
     const helloClientFile = await createClientFile(helloFile)
     expect(clientFile1 === helloClientFile).toBe(false)
+  })
+
+  it("should get an upload policy from client file info", async () => {
+    const authToken = createAuthToken(
+      "PRTV_aaaaaaaaaaaaaaaa_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      {
+        expiresIn: 60 * 60,
+        path: "**/*",
+      }
+    )
+    const client = new Client({
+      authToken,
+      apiOrigin: "https://api.fake-unit-test-endpoint.for.cloud",
+    })
+
+    $axios.post.mockResolvedValueOnce(
+      promised({
+        status: "success",
+        data: {
+          type: "image",
+          size: [1024, 1536],
+          url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+        },
+      })
+    )
+
+    const result = await getUploadPolicyFromClientFileInfo({
+      client,
+      clientFileInfo: {
+        type: "generic",
+        filename: "alphabet.txt",
+        contentType: "text/plain",
+        bytes: 26,
+      },
+    })
+
+    const axiosArgs = $axios.post.mock.calls[0]
+    expect(axiosArgs[0]).toEqual(
+      "https://api.fake-unit-test-endpoint.for.cloud/api/v1/upload"
+    )
+    expect(axiosArgs[1]).toMatchObject({
+      clientFileInfo: {
+        type: "generic",
+        filename: "alphabet.txt",
+        contentType: "text/plain",
+        bytes: 26,
+      },
+    })
+
+    expect(result).toEqual({
+      type: "image",
+      size: [1024, 1536],
+      url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+    })
   })
 
   it("should get an upload policy", async () => {

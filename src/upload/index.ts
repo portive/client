@@ -1,5 +1,6 @@
 import axios from "axios"
 import {
+  ClientFileInfo,
   HostedFileInfo,
   JSendError,
   JSendSuccess,
@@ -12,6 +13,27 @@ import { UploadProgressEvent } from "./types"
 import { UPLOAD_PATH } from "./constants"
 export * from "./create-client-file"
 export * from "../resize"
+
+export async function getUploadPolicyFromClientFileInfo({
+  client,
+  clientFileInfo,
+}: {
+  client: Client
+  clientFileInfo: ClientFileInfo
+}): Promise<UploadFileResponse> {
+  try {
+    const response = await client.post<UploadProps, UploadFileResponse>(
+      UPLOAD_PATH,
+      { clientFileInfo }
+    )
+    return response
+  } catch (e) {
+    return {
+      status: "error",
+      message: `Error during getUploadPolicyFromClientFileInfo. ${e}`,
+    }
+  }
+}
 
 export async function getUploadPolicy({
   client,
@@ -35,24 +57,7 @@ export async function getUploadPolicy({
       ...clientFileInfo
     } = clientFile
 
-    const response = await client.post<UploadProps, UploadFileResponse>(
-      UPLOAD_PATH,
-      { clientFileInfo }
-    )
-    return response
-
-    // const authToken = await client.getAuthToken()
-
-    // const uploadProps: UploadProps = {
-    //   authToken,
-    //   clientFileInfo,
-    // }
-
-    // const axiosResponse: AxiosResponse<UploadFileResponse> = await axios.post(
-    //   apiGetPolicyUrl,
-    //   uploadProps
-    // )
-    // return axiosResponse.data
+    return await getUploadPolicyFromClientFileInfo({ client, clientFileInfo })
   } catch (e) {
     return {
       status: "error",
@@ -61,6 +66,11 @@ export async function getUploadPolicy({
   }
 }
 
+/**
+ * This method can be used on its own for the entire upload process which
+ * includes getting the upload policy and then sending the file to the
+ * cloud servers on Amazon S3.
+ */
 export async function uploadFile({
   client,
   file,
