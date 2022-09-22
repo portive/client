@@ -18,7 +18,7 @@ import {
   getUploadPolicyFromClientFileInfo,
   uploadFile,
 } from "../.."
-import { createAuthToken } from "@forcloud/auth"
+import { createAuthToken } from "@portive/auth"
 import { promised } from "./test-utils"
 
 jest.mock("axios")
@@ -190,13 +190,13 @@ describe("fetchUploadPolicy", () => {
           data: {
             status: "success",
             data: {
-              apiUrl: "https://s3.amazonaws.com/forcloud-dev-bucket",
+              apiUrl: "https://s3.amazonaws.com/portive-dev-bucket",
               fileUrl:
                 "https://files.dev.for.cloud/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
               formFields: {
                 acl: "public-read",
                 key: "f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
-                bucket: "forcloud-dev-bucket",
+                bucket: "portive-dev-bucket",
                 "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
                 "X-Amz-Credential":
                   "AKIA_FAKE_CREDENTIALS/20220614/us-east-1/s3/aws4_request",
@@ -238,9 +238,7 @@ describe("fetchUploadPolicy", () => {
     })
 
     const uploadArgs = $axios.post.mock.calls[1]
-    expect(uploadArgs[0]).toEqual(
-      "https://s3.amazonaws.com/forcloud-dev-bucket"
-    )
+    expect(uploadArgs[0]).toEqual("https://s3.amazonaws.com/portive-dev-bucket")
     expect(uploadArgs[1]).toEqual(expect.any(FormData))
     expect(uploadArgs[2]).toEqual({ onUploadProgress: expect.any(Function) })
   })
