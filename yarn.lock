@@ -793,11 +793,6 @@
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
 
-"@portive/date-json@^1.0.1":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@portive/date-json/-/date-json-1.0.4.tgz#c35ce0f5f68d25336dd942136872c0cea047e26c"
-  integrity sha512-gPrq5l5YJHsukE9lgiXWFsx1iIe86wBXL/lvl/txr7Lr9nQ2M6c05t8CHszqOYsdyGDn9zpMU7Pezzobzf3YeQ==
-
 "@portive/jwt-utils@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@portive/jwt-utils/-/jwt-utils-1.0.7.tgz#744c7e28d5ab27ee83667e7060135e22a12ced40"
@@ -2066,6 +2061,11 @@ ecdsa-sig-formatter@1.0.11:
   integrity sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==
   dependencies:
     safe-buffer "^5.0.1"
+
+ejson-date@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/ejson-date/-/ejson-date-1.0.8.tgz#eb36534e1aed5bef7c4d7b4bbc8ce0c9b1030c6a"
+  integrity sha512-VWELKka/3wTE2BVxtuucZLLyznEsIGb5/5i9r+sxSTvoOq9lgWTXJpQbZnMUtMSG/GMxwKyq8kB4d+JbJYEGMg==
 
 electron-to-chromium@^1.3.723:
   version "1.4.154"
@@ -4114,13 +4114,13 @@ nextjs-cors@^2.1.1:
   dependencies:
     cors "^2.8.5"
 
-nexton@^1.0.41:
-  version "1.0.41"
-  resolved "https://registry.yarnpkg.com/nexton/-/nexton-1.0.41.tgz#1df034c2a5e15493ae1a65def95df2cb1bb9c7e0"
-  integrity sha512-JNvOf78R0V+EWmEsE/Z4e4DAsw81OObHz5CoCwmxnDikpFHJ8jX1hwT2ozrXVLgTu0HSilk/kfZJ3GbelzvUZg==
+nexton@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/nexton/-/nexton-1.0.43.tgz#7a0a86c81f0b75d074603928a91576c702046772"
+  integrity sha512-A0EVkyhT3U7YBDSxam4uxNmX3CGyVYF3b9+G8+WcdF4NkIR8FLCUzMYtHAH37knzDTSjaJMEXqZ5ZcASOARcWQ==
   dependencies:
-    "@portive/date-json" "^1.0.1"
     chalk "^4"
+    ejson-date "^1.0.8"
     jsome "^2.5.0"
     next "^12.1.5"
     nextjs-cors "^2.1.1"
@@ -4128,7 +4128,7 @@ nexton@^1.0.41:
     react ">=17"
     react-dom ">=17"
     superstruct "^0.15.4"
-    unit-logger "^1.0.2"
+    unit-logger "^1.0.3"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -5608,10 +5608,10 @@ unfetch@^4.2.0:
   resolved "https://registry.yarnpkg.com/unfetch/-/unfetch-4.2.0.tgz#7e21b0ef7d363d8d9af0fb929a5555f6ef97a3be"
   integrity sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==
 
-unit-logger@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/unit-logger/-/unit-logger-1.0.2.tgz#99a2220dde5c6927935798f628390bca8329ce3b"
-  integrity sha512-umcNdO5n2nDOSngrJ1o5iB4HxAaMUqIhd8Cz8vbv5L1fw4n98bTzNn2QGpKseS78V/v3COO2lYGvsbuCcWHclg==
+unit-logger@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/unit-logger/-/unit-logger-1.0.3.tgz#ffbabe5bbe46a148caa2452641b4add05ffa90c5"
+  integrity sha512-VkKS2D5cO/IKwfALhOtFsPjksvZcwFGA8Uasx++hmj1+8mFvEV4P1pSi4B7F0wn5WFj82qO40qvARLeY9oXu/A==
 
 universalify@^0.1.2:
   version "0.1.2"
