@@ -9,6 +9,7 @@ export const getServerSideProps = Web.getServerSideProps(
   s.object({}),
   async () => {
     return {
+      envName: env.ENV_NAME,
       apiOrigin: env.API_ORIGIN_URL,
       authToken: env.PORTIVE_AUTH_TOKEN,
     }
@@ -16,6 +17,7 @@ export const getServerSideProps = Web.getServerSideProps(
 )
 
 export default Web.Page<typeof getServerSideProps>(function Index({
+  envName,
   apiOrigin,
   authToken,
 }) {
@@ -49,8 +51,9 @@ export default Web.Page<typeof getServerSideProps>(function Index({
       <Head>
         <style>{`body { font-family: sans-serif; }`}</style>
       </Head>
-      <h1>Hello World</h1>
-      <p>Lorem ipsum dolar sit amet consecteteur.</p>
+      <h1>Upload file with client test</h1>
+      <p>Environment: {envName}</p>
+      <p>API Origin: {apiOrigin}</p>
       <input type="file" onChange={onFileChange} />
       {hostedFileInfo ? (
         <div style={{ marginTop: "1em" }}>

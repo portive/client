@@ -97,7 +97,9 @@
     "publish:npm:patch": "yarn build:once && yarn version --patch && yarn publish --non-interactive || yarn publish:first",
     "publish:first": "echo 'IMPORTANT INSTRUCTIONS: This is first publish so please use:\n\n\"npm publish --access=public\"'",
     "-- next": "# NextJs",
-    "start:dev": "DOTENV=.env/dev.env next dev -p 3992",
+    "start:local": "DOTENV=.env/local.env next dev -p 3992",
+    "start:staging": "DOTENV=.env/staging.env next dev -p 3992",
+    "start:production": "DOTENV=.env/production.env next dev -p 3992",
     "-- end": "# end"
   }
 }
