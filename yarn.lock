@@ -775,7 +775,7 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
-"@portive/api-types@^7.2.1":
+"@portive/api-types@^7.2.4":
   version "7.2.4"
   resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-7.2.4.tgz#9d5c0b076c04a457015b5be797fc1b341e3b4c66"
   integrity sha512-cle0CrPEtfyRBCfMQ+QvGRAS9aYrD5J1iGEZehNfEv6PiZXYI9E3my0y4mZAhBmkldCwtf17sHYXSJ/sKJXmbA==
@@ -783,13 +783,13 @@
     "@thesunny/assert-type" "^0.1.7"
     superstruct "^0.15.4"
 
-"@portive/auth@^1.0.4":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.9.tgz#6e3abbfe88cc3ddc7b647351d4fd95ca6c1915e0"
-  integrity sha512-7bLnPsyZ0cduI5Kg7AONz0Bxu2+oqaFXZUrvbwOX7Yjx16VBpaIj+2CzlVeSbLsIgU8765UBcE8Jn2GkwUBh8g==
+"@portive/auth@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.10.tgz#9c4c55249f36f453fc68e2f763649ffe07c7c689"
+  integrity sha512-0Pcb1Sw8W9lBeIfSM4VVnMxR+NDSMgwUUV+9WKsN4JgCWq4IbZh00qTsKxFPYB8BRcP3wAMX3dtaoaVrUTeYxg==
   dependencies:
-    "@portive/api-types" "^7.2.1"
-    "@portive/jwt-utils" "^1.0.5"
+    "@portive/api-types" "^7.2.4"
+    "@portive/jwt-utils" "^1.0.7"
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
 
@@ -798,7 +798,7 @@
   resolved "https://registry.yarnpkg.com/@portive/date-json/-/date-json-1.0.4.tgz#c35ce0f5f68d25336dd942136872c0cea047e26c"
   integrity sha512-gPrq5l5YJHsukE9lgiXWFsx1iIe86wBXL/lvl/txr7Lr9nQ2M6c05t8CHszqOYsdyGDn9zpMU7Pezzobzf3YeQ==
 
-"@portive/jwt-utils@^1.0.5":
+"@portive/jwt-utils@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@portive/jwt-utils/-/jwt-utils-1.0.7.tgz#744c7e28d5ab27ee83667e7060135e22a12ced40"
   integrity sha512-qtbPKzpv5iojFbqT8dBHUAEvmTsDTwUzzw73OCGIWzxJ4t3ezG0flo+U2TqaKRc7rTA4Rexw8rXT1+kbkXqRzg==
@@ -828,12 +828,10 @@
   dependencies:
     ts-node "^10.4.0"
 
-"@thesunny/get-env@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@thesunny/get-env/-/get-env-1.0.2.tgz#2aa5f01346595f31865fa2a27b80511ea14af54c"
-  integrity sha512-BGND/5Rs7oa/dEeuFtJvtpTA0QKYmGrsO66ug+Ra8SoIa0zoROgMOALWnoPKliU3YWxmiqCLnr/3nAuP7AfzUQ==
-  dependencies:
-    "@thesunny/assert-type" "^0.1.7"
+"@thesunny/get-env@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@thesunny/get-env/-/get-env-1.0.5.tgz#7f892a0d0b84d0f3210517077b34923b04258bee"
+  integrity sha512-/G7JAjG985p3W+6vWmota5fnXc+r1AuuQCzIPAsKFUpxefZmMy5jkt0EEz0ydrU9rDdnVvi6fxbv8MF8gu5OWw==
 
 "@tootallnate/once@1":
   version "1.1.2"
