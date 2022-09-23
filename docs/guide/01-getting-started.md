@@ -47,7 +47,7 @@ const imageSuccessResult = {
   status: 'success',
   data: {
     type: "image"
-    url: "https://files.for.cloud/f/my-project/articles/123/lSIrlij920X4FSEGLXgNC--640x480.jpeg",
+    url: "https://files.portive.com/f/my-project/articles/123/lSIrlij920X4FSEGLXgNC--640x480.jpeg",
     size: [640,x480]
   }
 }
@@ -60,7 +60,7 @@ const nonImageSuccessResult = {
   status: "success",
   data: {
     type: "generic"
-    url: "https://files.for.cloud/f/my-project/articles/123/3MvYfzRqmkpY3F9BLQNj5.txt"
+    url: "https://files.portive.com/f/my-project/articles/123/3MvYfzRqmkpY3F9BLQNj5.txt"
   }
 }
 ```

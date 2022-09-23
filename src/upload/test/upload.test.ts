@@ -73,7 +73,7 @@ describe("fetchUploadPolicy", () => {
     )
     const client = new Client({
       authToken,
-      apiOrigin: "https://api.fake-unit-test-endpoint.for.cloud",
+      apiOrigin: "https://api.fake-unit-test-endpoint.portive.com",
     })
 
     $axios.post.mockResolvedValueOnce(
@@ -82,7 +82,7 @@ describe("fetchUploadPolicy", () => {
         data: {
           type: "image",
           size: [1024, 1536],
-          url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+          url: "https://files.dev.portive.com/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
         },
       })
     )
@@ -99,7 +99,7 @@ describe("fetchUploadPolicy", () => {
 
     const axiosArgs = $axios.post.mock.calls[0]
     expect(axiosArgs[0]).toEqual(
-      "https://api.fake-unit-test-endpoint.for.cloud/api/v1/upload"
+      "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(axiosArgs[1]).toMatchObject({
       clientFileInfo: {
@@ -113,7 +113,7 @@ describe("fetchUploadPolicy", () => {
     expect(result).toEqual({
       type: "image",
       size: [1024, 1536],
-      url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+      url: "https://files.dev.portive.com/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
     })
   })
 
@@ -127,7 +127,7 @@ describe("fetchUploadPolicy", () => {
     )
     const client = new Client({
       authToken,
-      apiOrigin: "https://api.fake-unit-test-endpoint.for.cloud",
+      apiOrigin: "https://api.fake-unit-test-endpoint.portive.com",
     })
 
     $axios.post.mockResolvedValueOnce(
@@ -136,7 +136,7 @@ describe("fetchUploadPolicy", () => {
         data: {
           type: "image",
           size: [1024, 1536],
-          url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+          url: "https://files.dev.portive.com/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
         },
       })
     )
@@ -148,7 +148,7 @@ describe("fetchUploadPolicy", () => {
 
     const axiosArgs = $axios.post.mock.calls[0]
     expect(axiosArgs[0]).toEqual(
-      "https://api.fake-unit-test-endpoint.for.cloud/api/v1/upload"
+      "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(axiosArgs[1]).toMatchObject({
       clientFileInfo: {
@@ -162,7 +162,7 @@ describe("fetchUploadPolicy", () => {
     expect(result).toEqual({
       type: "image",
       size: [1024, 1536],
-      url: "https://files.dev.for.cloud/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
+      url: "https://files.dev.portive.com/f/on/2022/06/14/8emyw16knref9ht665fme--1024x1536.jpg",
     })
   })
 
@@ -176,7 +176,7 @@ describe("fetchUploadPolicy", () => {
     )
     const client = new Client({
       authToken,
-      apiOrigin: "https://api.fake-unit-test-endpoint.for.cloud",
+      apiOrigin: "https://api.fake-unit-test-endpoint.portive.com",
     })
 
     $axios.post
@@ -192,7 +192,7 @@ describe("fetchUploadPolicy", () => {
             data: {
               apiUrl: "https://s3.amazonaws.com/portive-dev-bucket",
               fileUrl:
-                "https://files.dev.for.cloud/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+                "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
               formFields: {
                 acl: "public-read",
                 key: "f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
@@ -220,13 +220,13 @@ describe("fetchUploadPolicy", () => {
       status: "success",
       data: {
         type: "generic",
-        url: "https://files.dev.for.cloud/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+        url: "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
       },
     })
 
     const policyArgs = $axios.post.mock.calls[0]
     expect(policyArgs[0]).toEqual(
-      "https://api.fake-unit-test-endpoint.for.cloud/api/v1/upload"
+      "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(policyArgs[1]).toMatchObject({
       clientFileInfo: {
