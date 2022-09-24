@@ -73,22 +73,33 @@ export default Web.Page<typeof getServerSideProps>(function Index({
           href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
         />
       </Head>
-      <h1>Upload file with client test</h1>
-      <p>Environment: {envName}</p>
-      <p>API Origin: {apiOrigin}</p>
+      <h1>
+        <img src="/favicon-32x32.png" /> Upload file with portive/client
+      </h1>
+      <p>
+        Environment: <strong>{envName}</strong>
+      </p>
+      <p>
+        API Origin: <strong>{apiOrigin}</strong>
+      </p>
       <input type="file" onChange={onFileChange} />
-      {hostedFileInfo ? (
-        <div style={{ marginTop: "1em" }}>
-          <a href={hostedFileInfo.url} rel="noreferrer" target="_blank">
-            {hostedFileInfo.url}
-          </a>
-        </div>
-      ) : null}
-      {hostedFileInfo && hostedFileInfo.type === "image" ? (
-        <div style={{ marginTop: "1em" }}>
-          <img src={hostedFileInfo.url} style={{ maxWidth: 320 }} />
-        </div>
-      ) : null}
+      {hostedFileInfo && (
+        <blockquote>
+          <p>Uploaded file...</p>
+          {hostedFileInfo ? (
+            <div style={{ marginTop: "1em" }}>
+              <a href={hostedFileInfo.url} rel="noreferrer" target="_blank">
+                {hostedFileInfo.url}
+              </a>
+            </div>
+          ) : null}
+          {hostedFileInfo && hostedFileInfo.type === "image" ? (
+            <div style={{ marginTop: "1em" }}>
+              <img src={hostedFileInfo.url} style={{ maxWidth: 320 }} />
+            </div>
+          ) : null}
+        </blockquote>
+      )}
     </div>
   )
 })
