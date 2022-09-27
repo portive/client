@@ -100,6 +100,8 @@
     "start:local": "DOTENV=.env/local.env next dev -p 3992",
     "start:staging": "DOTENV=.env/staging.env next dev -p 3992",
     "start:production": "DOTENV=.env/production.env next dev -p 3992",
+    "-- open": "# open browser tabs",
+    "open": "open -a 'google chrome' http://localhost:3992",
     "-- end": "# end"
   }
 }
