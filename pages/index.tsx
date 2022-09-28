@@ -1,7 +1,7 @@
 import Web, { s } from "nexton/web"
 import Head from "next/head"
 import { useCallback, useState } from "react"
-import { Client, uploadFile } from "~/src"
+import { Client, resizeIn, uploadFile } from "~/src"
 import { env } from "~/lib/server-env"
 import { HostedFileInfo } from "@portive/api-types"
 
@@ -92,16 +92,45 @@ export default Web.Page<typeof getServerSideProps>(function Index({
         <blockquote>
           <p>Uploaded file...</p>
           {hostedFileInfo ? (
-            <div style={{ marginTop: "1em" }}>
-              <a href={hostedFileInfo.url} rel="noreferrer" target="_blank">
-                {hostedFileInfo.url}
-              </a>
-            </div>
+            <>
+              <p>
+                <a href={hostedFileInfo.url} rel="noreferrer" target="_blank">
+                  {hostedFileInfo.url}
+                </a>
+              </p>
+            </>
           ) : null}
-          {hostedFileInfo && hostedFileInfo.type === "image" ? (
-            <div style={{ marginTop: "1em" }}>
-              <img src={hostedFileInfo.url} style={{ maxWidth: 320 }} />
-            </div>
+          {hostedFileInfo.type === "generic" ? (
+            <p>
+              <iframe
+                key={hostedFileInfo.url}
+                src={hostedFileInfo.url}
+                style={{
+                  width: "100%",
+                  height: 480,
+                  border: "1px solid #808080",
+                  borderRadius: 8,
+                }}
+              ></iframe>
+            </p>
+          ) : null}
+          {hostedFileInfo.type === "image" ? (
+            <>
+              <p style={{ marginTop: "1em" }}>
+                <img
+                  key={hostedFileInfo.url}
+                  src={hostedFileInfo.url}
+                  style={{ maxWidth: 320 }}
+                />
+              </p>
+              <p>Resized in 50x50</p>
+              <p>
+                <img
+                  key={hostedFileInfo.url}
+                  src={`${hostedFileInfo.url}?size=50x50`}
+                />
+              </p>
+            </>
           ) : null}
         </blockquote>
       )}
