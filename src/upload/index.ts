@@ -66,6 +66,8 @@ export async function getUploadPolicy({
   }
 }
 
+type UploadResponse = JSendError | JSendSuccess<HostedFileInfo>
+
 /**
  * This method can be used on its own for the entire upload process which
  * includes getting the upload policy and then sending the file to the
@@ -75,11 +77,15 @@ export async function uploadFile({
   client,
   file,
   onProgress,
+  onComplete = () => {
+    /* noop */
+  },
 }: {
   client: Client
   file: File
   onProgress?: (e: UploadProgressEvent) => void
-}): Promise<JSendError | JSendSuccess<HostedFileInfo>> {
+  onComplete?: (e: UploadResponse) => void
+}): Promise<UploadResponse> {
   const clientFile = await createClientFile(file)
 
   const uploadPolicyResponse = await getUploadPolicy({
@@ -116,7 +122,7 @@ export async function uploadFile({
     },
   })
   if (uploadResponse.status !== 204) {
-    return {
+    const errorResponse: JSendError = {
       status: "error",
       message: `Error during upload ${JSON.stringify(
         uploadResponse.data,
@@ -124,6 +130,8 @@ export async function uploadFile({
         2
       )}`,
     }
+    onComplete(errorResponse)
+    return errorResponse
   }
   const hostedFileInfo: HostedFileInfo =
     clientFile.type === "image"
@@ -136,8 +144,10 @@ export async function uploadFile({
           type: "generic",
           url: fileUrl,
         }
-  return {
+  const successResponse: JSendSuccess<HostedFileInfo> = {
     status: "success",
     data: hostedFileInfo,
   }
+  onComplete(successResponse)
+  return successResponse
 }

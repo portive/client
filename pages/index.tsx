@@ -35,10 +35,15 @@ export default Web.Page<typeof getServerSideProps>(function Index({
         client,
         file,
         onProgress(e) {
-          console.log(e)
+          console.log("onProgress", e)
+        },
+        onComplete(e) {
+          console.log("onComplete", e)
         },
       })
-      if (result) console.log(result)
+      if (result) {
+        console.log("result", result)
+      }
       if (result.status === "success") {
         setHostedFileInfo(result.data)
       }
