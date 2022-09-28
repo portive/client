@@ -59,6 +59,9 @@ export class Client {
     this.apiOrigin = apiOrigin
   }
 
+  /**
+   * Posts at the given path with the `apiKey` or `authToken`.
+   */
   async post<
     P extends { apiKey?: string; authToken?: string } & JsonObject,
     R extends JsonObject
@@ -68,18 +71,43 @@ export class Client {
         `Expected path to start with "/" but is ${JSON.stringify(path)}`
       )
     const url = `${this.apiOrigin}${path}`
-    const axiosResponse = await axios.post<R, AxiosResponse<R>, P>(url, {
-      apiKey: await this.getApiKey(),
-      authToken: await this.getAuthToken(),
+    const postData: P & { apiKey?: string; authKey?: string } = {
       ...data,
-    })
+    }
+    const authToken = await this.getAuthToken()
+    const apiKey = await this.getApiKey()
+    if (typeof authToken === "string" && typeof apiKey === "string") {
+      throw new Error(
+        `Expected one of 'authToken' or 'apiKey' to be defined but both are defined which is ambiguous`
+      )
+    } else if (typeof authToken === "string") {
+      postData.authToken = authToken
+    } else if (typeof apiKey === "string") {
+      postData.apiKey = apiKey
+    } else {
+      throw new Error(
+        `Expected either 'authToken' or 'apiKey' to be defined but neither are defined`
+      )
+    }
+    const axiosResponse = await axios.post<R, AxiosResponse<R>, P>(
+      url,
+      postData
+    )
     return axiosResponse.data
   }
 
+  /**
+   * Gets the apiKey for the client. If it is a function, it gets the return
+   * value of the function. If that returns a promise, it awaits it.
+   */
   async getApiKey(): Promise<string | undefined> {
     return this.unresolvedApiKey ? resolve(this.unresolvedApiKey) : undefined
   }
 
+  /**
+   * Gets the authToken for the client. If it is a function, it gets the return
+   * value of the function. If that returns a promise, it awaits it.
+   */
   async getAuthToken(): Promise<string | undefined> {
     return this.unresolvedAuthToken
       ? resolve(this.unresolvedAuthToken)

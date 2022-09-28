@@ -166,7 +166,28 @@ describe("fetchUploadPolicy", () => {
     })
   })
 
-  it("should upload a file", async () => {
+  const GET_POLICY_RESPONSE = {
+    status: "success",
+    data: {
+      apiUrl: "https://s3.amazonaws.com/portive-dev-bucket",
+      fileUrl:
+        "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+      formFields: {
+        acl: "public-read",
+        key: "f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+        bucket: "portive-dev-bucket",
+        "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
+        "X-Amz-Credential":
+          "AKIA_FAKE_CREDENTIALS/20220614/us-east-1/s3/aws4_request",
+        "X-Amz-Date": "20220614T214521Z",
+        Policy: "VERY_LONG_POLICY",
+        "X-Amz-Signature":
+          "0b34e122084b437a42bc540a833bdadcddd5fcc8b54b0336485e755608a299b4",
+      },
+    },
+  }
+
+  it("should upload a file with an authToken", async () => {
     const authToken = createAuthToken(
       "PRTV_aaaaaaaaaaaaaaaa_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       {
@@ -181,48 +202,105 @@ describe("fetchUploadPolicy", () => {
 
     $axios.post
       .mockResolvedValueOnce(
-        promised({
-          /**
-           * `axios` returns its response in a `data` property. Within that
-           * `data` property, note that the response from the server also
-           * has a `data` property. This is expected.
-           */
-          data: {
-            status: "success",
-            data: {
-              apiUrl: "https://s3.amazonaws.com/portive-dev-bucket",
-              fileUrl:
-                "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
-              formFields: {
-                acl: "public-read",
-                key: "f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
-                bucket: "portive-dev-bucket",
-                "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
-                "X-Amz-Credential":
-                  "AKIA_FAKE_CREDENTIALS/20220614/us-east-1/s3/aws4_request",
-                "X-Amz-Date": "20220614T214521Z",
-                Policy: "VERY_LONG_POLICY",
-                "X-Amz-Signature":
-                  "0b34e122084b437a42bc540a833bdadcddd5fcc8b54b0336485e755608a299b4",
-              },
-            },
-          },
-        })
+        /**
+         * `axios` returns its response in a `data` property. Within that
+         * `data` property, note that the response from the server also
+         * has a `data` property. This is expected.
+         */
+        promised({ data: GET_POLICY_RESPONSE })
       )
       .mockResolvedValueOnce(promised({ status: 204 }))
+
+    const onCompleteMock = jest.fn()
 
     const result = await uploadFile({
       client,
       file: textFile,
+      onComplete: onCompleteMock,
     })
 
-    expect(result).toEqual({
+    const EXPECTED_RESULT = {
       status: "success",
       data: {
         type: "generic",
         url: "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
       },
+    }
+
+    /**
+     * Make sure the `onComplete` callback got called
+     */
+    expect(onCompleteMock.mock.calls.length).toBe(1)
+    expect(onCompleteMock.mock.calls[0][0]).toEqual(EXPECTED_RESULT)
+
+    /**
+     * Make sure the `result` value is as expected
+     */
+    expect(result).toEqual(EXPECTED_RESULT)
+
+    const policyArgs = $axios.post.mock.calls[0]
+    expect(policyArgs[0]).toEqual(
+      "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
+    )
+    expect(policyArgs[1]).toMatchObject({
+      clientFileInfo: {
+        type: "generic",
+        filename: "alphabet.txt",
+        contentType: "text/plain",
+        bytes: 26,
+      },
     })
+
+    const uploadArgs = $axios.post.mock.calls[1]
+    expect(uploadArgs[0]).toEqual("https://s3.amazonaws.com/portive-dev-bucket")
+    expect(uploadArgs[1]).toEqual(expect.any(FormData))
+    expect(uploadArgs[2]).toEqual({ onUploadProgress: expect.any(Function) })
+  })
+
+  it("should upload a file with an apiKey", async () => {
+    const API_KEY = "PRTV_aaaaaaaaaaaaaaaa_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    const client = new Client({
+      apiKey: API_KEY,
+      apiOrigin: "https://api.fake-unit-test-endpoint.portive.com",
+    })
+
+    $axios.post
+      .mockResolvedValueOnce(
+        /**
+         * `axios` returns its response in a `data` property. Within that
+         * `data` property, note that the response from the server also
+         * has a `data` property. This is expected.
+         */
+        promised({ data: GET_POLICY_RESPONSE })
+      )
+      .mockResolvedValueOnce(promised({ status: 204 }))
+
+    const onCompleteMock = jest.fn()
+
+    const result = await uploadFile({
+      client,
+      file: textFile,
+      onComplete: onCompleteMock,
+    })
+
+    const EXPECTED_RESULT = {
+      status: "success",
+      data: {
+        type: "generic",
+        url: "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
+      },
+    }
+
+    /**
+     * Make sure the `onComplete` callback got called
+     */
+    expect(onCompleteMock.mock.calls.length).toBe(1)
+    expect(onCompleteMock.mock.calls[0][0]).toEqual(EXPECTED_RESULT)
+
+    /**
+     * Make sure the `result` value is as expected
+     */
+    expect(result).toEqual(EXPECTED_RESULT)
 
     const policyArgs = $axios.post.mock.calls[0]
     expect(policyArgs[0]).toEqual(
