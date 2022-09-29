@@ -775,20 +775,20 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
-"@portive/api-types@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-8.0.0.tgz#dcf1a329b18504c8ef585265337d2b29e32b9779"
-  integrity sha512-zMeZJXekWdFAAMkuJ18xfsJsWjIi/fefpeqL6umXPkQslXBq/jdkxrd+PnIPLYOGh0CtABwvt+JSswHcFDRD6A==
+"@portive/api-types@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-8.0.1.tgz#e4732bf6825d7329bd1205163525cfab28685581"
+  integrity sha512-tq0ri7XK6A8Qkrkmy/QkmS7nuKQjlktbtHnFDC73tPLXhND0OyDa10KcPH44rBw4mt0qWFJAXB1QcC/d3laTSQ==
   dependencies:
-    "@thesunny/assert-type" "^0.1.7"
+    "@thesunny/assert-type" "^0.1.13"
     superstruct "^0.15.4"
 
-"@portive/auth@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-8.0.0.tgz#e9f0c8bd67b643b8e8297c38630e720f5b2a9a5d"
-  integrity sha512-hDQPkGI/jJvEQFV1ZmlWynbTmWUT0osDmLA/wASAsHgK9pccFg+AOOLeU+iJGMx2w1V20k3/+P5ADyMCXjv67w==
+"@portive/auth@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-8.0.1.tgz#ca3da17c05bd49eaf6a0ff8fd26dfccb1d5f8e98"
+  integrity sha512-bjZ7eUX4Tm0rr34a/c96xsAoSc8OzroIbm2PeI/g88jubenCIEzi7OoKFEVTx/8KMg/5veRdMakWq+42dQ8wNA==
   dependencies:
-    "@portive/api-types" "^8.0.0"
+    "@portive/api-types" "^8.0.1"
     "@portive/jwt-utils" "^1.0.7"
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
@@ -816,17 +816,17 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@thesunny/assert-type@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@thesunny/assert-type/-/assert-type-0.1.7.tgz#c68cb8432da8baa81c9f5e0acbdfceebb8add5de"
-  integrity sha512-QmE7FgpAPD/vhRDRPlS8bmyOV+7mwQgJn6D+4p2qVn3mXzo0yHohiAjDBNCH/fDhR8aqxtBBVdEp+tJfd/4i3A==
+"@thesunny/assert-type@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@thesunny/assert-type/-/assert-type-0.1.13.tgz#d893351218cfa044329f8f2d5a5f8188d1698bf1"
+  integrity sha512-9uz7HcY7n+SdTCQvTy5e24pCn9oBge5XnnSWCYuXC9PUx+/TwjU4KpjqswdowVZUJ58URWXqLwpfok8GrkeREw==
   dependencies:
-    ts-node "^10.4.0"
+    ts-node "^10.9.1"
 
-"@thesunny/get-env@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@thesunny/get-env/-/get-env-1.0.5.tgz#7f892a0d0b84d0f3210517077b34923b04258bee"
-  integrity sha512-/G7JAjG985p3W+6vWmota5fnXc+r1AuuQCzIPAsKFUpxefZmMy5jkt0EEz0ydrU9rDdnVvi6fxbv8MF8gu5OWw==
+"@thesunny/get-env@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@thesunny/get-env/-/get-env-1.0.6.tgz#414e61363f7feac0b0f0ca3a35558633e7039d36"
+  integrity sha512-xyk//tmclBaW/SMxL+tbENjfozlSO7Nrot4Lv9Bhy/G7u5IXTBLOutMzfaXJCt531HZSbgwZEWkvK1S6BeOoVQ==
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -2062,10 +2062,10 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-ejson-date@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/ejson-date/-/ejson-date-1.0.8.tgz#eb36534e1aed5bef7c4d7b4bbc8ce0c9b1030c6a"
-  integrity sha512-VWELKka/3wTE2BVxtuucZLLyznEsIGb5/5i9r+sxSTvoOq9lgWTXJpQbZnMUtMSG/GMxwKyq8kB4d+JbJYEGMg==
+ejson-date@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/ejson-date/-/ejson-date-1.0.9.tgz#223dae92e95af633320608609830f98d11c79b6a"
+  integrity sha512-ntOrTKHqSVnfEe4Utma64qqRtcgDhwPDhtmbVbEMBxXVWeO6oBeouD9WWyWm3fEjdYW7fqao2IKTYZ07oX+R1w==
 
 electron-to-chromium@^1.3.723:
   version "1.4.154"
@@ -4114,13 +4114,13 @@ nextjs-cors@^2.1.1:
   dependencies:
     cors "^2.8.5"
 
-nexton@^1.0.44:
-  version "1.0.44"
-  resolved "https://registry.yarnpkg.com/nexton/-/nexton-1.0.44.tgz#e852d3929f8bd30a491030c201daafcc94e5616e"
-  integrity sha512-SbX0rMi3Gj5pQBV5i7piN63AEZOljS2NeM6o4okE70JixKgAUba/RbXyMr2GM4gEulOWssDbXzLtrM9egeFzEQ==
+nexton@^1.0.45:
+  version "1.0.45"
+  resolved "https://registry.yarnpkg.com/nexton/-/nexton-1.0.45.tgz#b4095584ca568cb3bf0cbb8796617cf86c0da949"
+  integrity sha512-nizMtZCljFUagBnUX6kcM5vWK8+OBU8ojAIFUvHsDNrf+EB1M5nnSrcT/XXdXJXlkpnjoUQubWEqwV0sFk4a3A==
   dependencies:
     chalk "^4"
-    ejson-date "^1.0.8"
+    ejson-date "^1.0.9"
     jsome "^2.5.0"
     next "^12.1.5"
     nextjs-cors "^2.1.1"
@@ -4834,10 +4834,10 @@ require-main-filename@^1.0.1:
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
   integrity sha512-IqSUtOVP4ksd1C/ej5zeEh/BIP2ajqpn8c5x+q99gvcIG/Qf0cud5raVnE/Dwd0ua9TXYDoDc0RE5hBSdz22Ug==
 
-resolvable-value@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/resolvable-value/-/resolvable-value-1.0.1.tgz#d5c04d7e957b4dc1b2ab2c93fbc4a286556f9723"
-  integrity sha512-UjIRUFss77FSbp5AI5Q5fj0ngE7SwS5GqzOs+mn/UdQcg6lHYMsPBsj7biZuvybn4rs8+V6LbB02F8YtxT2HkQ==
+resolvable-value@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/resolvable-value/-/resolvable-value-1.0.2.tgz#2feea918e6214198dffe3d5f132695e5f019ec84"
+  integrity sha512-H6HzqoYUAAd5JXT1wJBOf2NRZ+Q3nQAWA+xkIidN2ykzq6Ovb3pRfz6ft+J2148GnYB+X1W2qWiR7+r5jRGOug==
 
 resolve-cwd@^3.0.0:
   version "3.0.0"
@@ -5474,10 +5474,29 @@ ts-jest@^27:
     semver "7.x"
     yargs-parser "20.x"
 
-ts-node@^10.4.0, ts-node@^10.8.1:
+ts-node@^10.8.1:
   version "10.8.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.8.1.tgz#ea2bd3459011b52699d7e88daa55a45a1af4f066"
   integrity sha512-Wwsnao4DQoJsN034wePSg5nZiw4YKXf56mPIAeD6wVmiv+RytNSWqc2f3fKvcUoV+Yn2+yocD71VOfQHbmVX4g==
+  dependencies:
+    "@cspotcode/source-map-support" "^0.8.0"
+    "@tsconfig/node10" "^1.0.7"
+    "@tsconfig/node12" "^1.0.7"
+    "@tsconfig/node14" "^1.0.0"
+    "@tsconfig/node16" "^1.0.2"
+    acorn "^8.4.1"
+    acorn-walk "^8.1.1"
+    arg "^4.1.0"
+    create-require "^1.1.0"
+    diff "^4.0.1"
+    make-error "^1.1.1"
+    v8-compile-cache-lib "^3.0.1"
+    yn "3.1.1"
+
+ts-node@^10.9.1:
+  version "10.9.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
+  integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
   dependencies:
     "@cspotcode/source-map-support" "^0.8.0"
     "@tsconfig/node10" "^1.0.7"
