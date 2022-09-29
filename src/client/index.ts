@@ -12,6 +12,13 @@ export type ClientOptions = {
 }
 
 /**
+ * Create a `Client` object and return it.
+ */
+export function createClient(options: ClientOptions): Client {
+  return new Client(options)
+}
+
+/**
  * Create a `Client` object that we pass to the API functions.
  *
  * We enforce the creation of a `Client` object for a few reasons:
@@ -63,6 +70,13 @@ export class Client {
    * Posts at the given path with the `apiKey` or `authToken`.
    */
   async post<
+    /**
+     * FIXME:
+     *
+     * This is a little messy. We don't actually want the `apiKey` or `authToken`
+     * to be passed in. We just don't want it to collide with the `data`. But
+     * perhaps this is better done by passing `data` separately.
+     */
     P extends { apiKey?: string; authToken?: string } & JsonObject,
     R extends JsonObject
   >(path: string, data: P): Promise<R> {
