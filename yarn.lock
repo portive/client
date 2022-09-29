@@ -775,14 +775,6 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
-"@portive/api-types@^7.2.4":
-  version "7.2.4"
-  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-7.2.4.tgz#9d5c0b076c04a457015b5be797fc1b341e3b4c66"
-  integrity sha512-cle0CrPEtfyRBCfMQ+QvGRAS9aYrD5J1iGEZehNfEv6PiZXYI9E3my0y4mZAhBmkldCwtf17sHYXSJ/sKJXmbA==
-  dependencies:
-    "@thesunny/assert-type" "^0.1.7"
-    superstruct "^0.15.4"
-
 "@portive/api-types@^8.0.0":
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-8.0.0.tgz#dcf1a329b18504c8ef585265337d2b29e32b9779"
@@ -791,12 +783,12 @@
     "@thesunny/assert-type" "^0.1.7"
     superstruct "^0.15.4"
 
-"@portive/auth@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.10.tgz#9c4c55249f36f453fc68e2f763649ffe07c7c689"
-  integrity sha512-0Pcb1Sw8W9lBeIfSM4VVnMxR+NDSMgwUUV+9WKsN4JgCWq4IbZh00qTsKxFPYB8BRcP3wAMX3dtaoaVrUTeYxg==
+"@portive/auth@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-8.0.0.tgz#e9f0c8bd67b643b8e8297c38630e720f5b2a9a5d"
+  integrity sha512-hDQPkGI/jJvEQFV1ZmlWynbTmWUT0osDmLA/wASAsHgK9pccFg+AOOLeU+iJGMx2w1V20k3/+P5ADyMCXjv67w==
   dependencies:
-    "@portive/api-types" "^7.2.4"
+    "@portive/api-types" "^8.0.0"
     "@portive/jwt-utils" "^1.0.7"
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
