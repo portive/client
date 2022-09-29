@@ -102,11 +102,13 @@ describe("fetchUploadPolicy", () => {
       "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(axiosArgs[1]).toMatchObject({
-      clientFileInfo: {
-        type: "generic",
-        filename: "alphabet.txt",
-        contentType: "text/plain",
-        bytes: 26,
+      data: {
+        clientFileInfo: {
+          type: "generic",
+          filename: "alphabet.txt",
+          contentType: "text/plain",
+          bytes: 26,
+        },
       },
     })
 
@@ -151,11 +153,13 @@ describe("fetchUploadPolicy", () => {
       "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(axiosArgs[1]).toMatchObject({
-      clientFileInfo: {
-        type: "generic",
-        filename: "alphabet.txt",
-        contentType: "text/plain",
-        bytes: 26,
+      data: {
+        clientFileInfo: {
+          type: "generic",
+          filename: "alphabet.txt",
+          contentType: "text/plain",
+          bytes: 26,
+        },
       },
     })
 
@@ -243,11 +247,13 @@ describe("fetchUploadPolicy", () => {
       "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(policyArgs[1]).toMatchObject({
-      clientFileInfo: {
-        type: "generic",
-        filename: "alphabet.txt",
-        contentType: "text/plain",
-        bytes: 26,
+      data: {
+        clientFileInfo: {
+          type: "generic",
+          filename: "alphabet.txt",
+          contentType: "text/plain",
+          bytes: 26,
+        },
       },
     })
 
@@ -307,11 +313,13 @@ describe("fetchUploadPolicy", () => {
       "https://api.fake-unit-test-endpoint.portive.com/api/v1/upload"
     )
     expect(policyArgs[1]).toMatchObject({
-      clientFileInfo: {
-        type: "generic",
-        filename: "alphabet.txt",
-        contentType: "text/plain",
-        bytes: 26,
+      data: {
+        clientFileInfo: {
+          type: "generic",
+          filename: "alphabet.txt",
+          contentType: "text/plain",
+          bytes: 26,
+        },
       },
     })
 

@@ -1,7 +1,7 @@
 import Web, { s } from "nexton/web"
 import Head from "next/head"
 import { useCallback, useState } from "react"
-import { Client, resizeIn, uploadFile } from "~/src"
+import { Client, uploadFile } from "~/src"
 import { env } from "~/lib/server-env"
 import { HostedFileInfo } from "@portive/api-types"
 

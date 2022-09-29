@@ -783,6 +783,14 @@
     "@thesunny/assert-type" "^0.1.7"
     superstruct "^0.15.4"
 
+"@portive/api-types@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-8.0.0.tgz#dcf1a329b18504c8ef585265337d2b29e32b9779"
+  integrity sha512-zMeZJXekWdFAAMkuJ18xfsJsWjIi/fefpeqL6umXPkQslXBq/jdkxrd+PnIPLYOGh0CtABwvt+JSswHcFDRD6A==
+  dependencies:
+    "@thesunny/assert-type" "^0.1.7"
+    superstruct "^0.15.4"
+
 "@portive/auth@^1.0.10":
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.10.tgz#9c4c55249f36f453fc68e2f763649ffe07c7c689"
