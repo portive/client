@@ -19,7 +19,7 @@ import {
   uploadFile,
 } from "../.."
 import { createAuthToken } from "@portive/auth"
-import { promised } from "./test-utils"
+import { promised } from "~/lib/test-utils"
 
 jest.mock("axios")
 const $axios = jest.mocked(axios, true)

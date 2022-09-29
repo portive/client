@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Client } from ".."
-import { promised } from "../../upload/test/test-utils"
+import { promised } from "~/lib/test-utils"
 
 jest.mock("axios")
 const $axios = jest.mocked(axios, true)
