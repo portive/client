@@ -54,7 +54,7 @@
     "isomorphic-unfetch": "^3.1.0",
     "jest": "^27",
     "next": "10.x",
-    "nexton": "^1.0.43",
+    "nexton": "^1.0.44",
     "prettier": "^2",
     "react": "17.x",
     "react-dom": "17.x",

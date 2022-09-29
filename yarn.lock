@@ -4114,10 +4114,10 @@ nextjs-cors@^2.1.1:
   dependencies:
     cors "^2.8.5"
 
-nexton@^1.0.43:
-  version "1.0.43"
-  resolved "https://registry.yarnpkg.com/nexton/-/nexton-1.0.43.tgz#7a0a86c81f0b75d074603928a91576c702046772"
-  integrity sha512-A0EVkyhT3U7YBDSxam4uxNmX3CGyVYF3b9+G8+WcdF4NkIR8FLCUzMYtHAH37knzDTSjaJMEXqZ5ZcASOARcWQ==
+nexton@^1.0.44:
+  version "1.0.44"
+  resolved "https://registry.yarnpkg.com/nexton/-/nexton-1.0.44.tgz#e852d3929f8bd30a491030c201daafcc94e5616e"
+  integrity sha512-SbX0rMi3Gj5pQBV5i7piN63AEZOljS2NeM6o4okE70JixKgAUba/RbXyMr2GM4gEulOWssDbXzLtrM9egeFzEQ==
   dependencies:
     chalk "^4"
     ejson-date "^1.0.8"
