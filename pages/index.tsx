@@ -19,7 +19,7 @@ export const getServerSideProps = Web.getServerSideProps(
   }
 )
 
-type AuthType = "API_KEY" | "AUTH_TOKEN"
+type AuthType = "API_KEY" | "AUTH_TOKEN_PROPS" | "AUTH_TOKEN_API_ROUTE"
 
 export default Web.Page<typeof getServerSideProps>(function Index({
   envName,
@@ -27,20 +27,38 @@ export default Web.Page<typeof getServerSideProps>(function Index({
   apiKey,
   authToken,
 }) {
-  const [authType, setAuthType] = useState<AuthType>("AUTH_TOKEN")
+  const [authType, setAuthType] = useState<AuthType>("AUTH_TOKEN_PROPS")
   const [hostedFileInfo, setHostedFileInfo] = useState<HostedFileInfo | null>(
     null
   )
+
+  function createClientByType() {
+    if (authType === "API_KEY") {
+      return new Client({ apiKey, apiOrigin })
+    }
+    if (authType === "AUTH_TOKEN_PROPS") {
+      return new Client({ authToken, apiOrigin })
+    }
+    if (authType === "AUTH_TOKEN_API_ROUTE") {
+      return new Client({
+        authToken: async () => {
+          const response = await fetch("/api/get-auth-token")
+          const json = await response.json()
+          return json.authToken
+        },
+        apiOrigin,
+      })
+    }
+    throw new Error("This shouldn't happen")
+  }
+
+  const client = createClientByType()
 
   const onFileChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files
       if (files == null) return
       const file = files[0]
-      const client =
-        authType === "API_KEY"
-          ? new Client({ apiKey, apiOrigin })
-          : new Client({ authToken, apiOrigin })
       const result = await uploadFile({
         client,
         file,
@@ -100,25 +118,38 @@ export default Web.Page<typeof getServerSideProps>(function Index({
       <div>Auth Type</div>
       <div>
         <input
+          id="authTypeAuthTokenProps"
+          type="radio"
+          name="authType"
+          value="AUTH_TOKEN_PROPS"
+          checked={authType === "AUTH_TOKEN_PROPS"}
+          onChange={() => setAuthType("AUTH_TOKEN_PROPS")}
+        />
+        <label htmlFor="authTypeAuthTokenProps">
+          Auth Token getServerSideProps
+        </label>
+      </div>
+      <div>
+        <input
+          id="authTypeAuthTokenApiRoute"
+          type="radio"
+          name="authType"
+          value="AUTH_TOKEN_API_ROUTE"
+          checked={authType === "AUTH_TOKEN_API_ROUTE"}
+          onChange={() => setAuthType("AUTH_TOKEN_API_ROUTE")}
+        />
+        <label htmlFor="authTypeAuthTokenApiRoute">Auth Token API Route</label>
+      </div>
+      <div>
+        <input
           id="authTypeApiKey"
           type="radio"
           name="authType"
           value="API_KEY"
           checked={authType === "API_KEY"}
-          onClick={() => setAuthType("API_KEY")}
+          onChange={() => setAuthType("API_KEY")}
         />
         <label htmlFor="authTypeApiKey">API key</label>
-      </div>
-      <div>
-        <input
-          id="authTypeAuthToken"
-          type="radio"
-          name="authType"
-          value="AUTH_TOKEN"
-          checked={authType === "AUTH_TOKEN"}
-          onClick={() => setAuthType("AUTH_TOKEN")}
-        />
-        <label htmlFor="authTypeAuthToken">Auth Token</label>
       </div>
       <p>
         <input type="file" onChange={onFileChange} />
