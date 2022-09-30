@@ -4,23 +4,30 @@ import { useCallback, useState } from "react"
 import { Client, uploadFile } from "~/src"
 import { env } from "~/lib/server-env"
 import { HostedFileInfo } from "@portive/api-types"
+import { createAuthToken } from "@portive/auth"
 
 export const getServerSideProps = Web.getServerSideProps(
   s.object({}),
   async () => {
+    const authToken = createAuthToken(env.PORTIVE_API_KEY, { expiresIn: "1d" })
     return {
+      apiKey: env.PORTIVE_API_KEY,
       envName: env.ENV_NAME,
       apiOrigin: env.API_ORIGIN_URL,
-      authToken: env.PORTIVE_AUTH_TOKEN,
+      authToken,
     }
   }
 )
 
+type AuthType = "API_KEY" | "AUTH_TOKEN"
+
 export default Web.Page<typeof getServerSideProps>(function Index({
   envName,
   apiOrigin,
+  apiKey,
   authToken,
 }) {
+  const [authType, setAuthType] = useState<AuthType>("AUTH_TOKEN")
   const [hostedFileInfo, setHostedFileInfo] = useState<HostedFileInfo | null>(
     null
   )
@@ -30,7 +37,10 @@ export default Web.Page<typeof getServerSideProps>(function Index({
       const files = e.target.files
       if (files == null) return
       const file = files[0]
-      const client = new Client({ authToken, apiOrigin })
+      const client =
+        authType === "API_KEY"
+          ? new Client({ apiKey, apiOrigin })
+          : new Client({ authToken, apiOrigin })
       const result = await uploadFile({
         client,
         file,
@@ -48,7 +58,7 @@ export default Web.Page<typeof getServerSideProps>(function Index({
         setHostedFileInfo(result.data)
       }
     },
-    []
+    [authType]
   )
 
   return (
@@ -87,7 +97,32 @@ export default Web.Page<typeof getServerSideProps>(function Index({
       <p>
         API Origin: <strong>{apiOrigin}</strong>
       </p>
-      <input type="file" onChange={onFileChange} />
+      <div>Auth Type</div>
+      <div>
+        <input
+          id="authTypeApiKey"
+          type="radio"
+          name="authType"
+          value="API_KEY"
+          checked={authType === "API_KEY"}
+          onClick={() => setAuthType("API_KEY")}
+        />
+        <label htmlFor="authTypeApiKey">API key</label>
+      </div>
+      <div>
+        <input
+          id="authTypeAuthToken"
+          type="radio"
+          name="authType"
+          value="AUTH_TOKEN"
+          checked={authType === "AUTH_TOKEN"}
+          onClick={() => setAuthType("AUTH_TOKEN")}
+        />
+        <label htmlFor="authTypeAuthToken">Auth Token</label>
+      </div>
+      <p>
+        <input type="file" onChange={onFileChange} />
+      </p>
       {hostedFileInfo && (
         <blockquote>
           <p>Uploaded file...</p>
