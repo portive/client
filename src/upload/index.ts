@@ -22,9 +22,9 @@ export async function getUploadPolicyFromClientFileInfo({
   clientFileInfo: ClientFileInfo
 }): Promise<UploadFileResponse> {
   try {
-    const response = await client.post<UploadProps, UploadFileResponse>(
+    const response = await client.post<UploadProps["data"], UploadFileResponse>(
       UPLOAD_PATH,
-      { data: { clientFileInfo } }
+      { clientFileInfo }
     )
     return response
   } catch (e) {

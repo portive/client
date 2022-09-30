@@ -11,6 +11,12 @@ export type ClientOptions = {
   apiOrigin?: string
 }
 
+type ClientPost<Data> = {
+  apiKey?: string
+  authToken?: string
+  data: Data
+}
+
 /**
  * Create a `Client` object and return it.
  */
@@ -77,16 +83,16 @@ export class Client {
      * to be passed in. We just don't want it to collide with the `data`. But
      * perhaps this is better done by passing `data` separately.
      */
-    P extends { apiKey?: string; authToken?: string } & JsonObject,
+    D extends JsonObject,
     R extends JsonObject
-  >(path: string, data: P): Promise<R> {
+  >(path: string, data: D): Promise<R> {
     if (!path.startsWith("/"))
       throw new Error(
         `Expected path to start with "/" but is ${JSON.stringify(path)}`
       )
     const url = `${this.apiOrigin}${path}`
-    const postData: P & { apiKey?: string; authKey?: string } = {
-      ...data,
+    const post: ClientPost<D> = {
+      data,
     }
     const authToken = await this.getAuthToken()
     const apiKey = await this.getApiKey()
@@ -95,17 +101,17 @@ export class Client {
         `Expected one of 'authToken' or 'apiKey' to be defined but both are defined which is ambiguous`
       )
     } else if (typeof authToken === "string") {
-      postData.authToken = authToken
+      post.authToken = authToken
     } else if (typeof apiKey === "string") {
-      postData.apiKey = apiKey
+      post.apiKey = apiKey
     } else {
       throw new Error(
         `Expected either 'authToken' or 'apiKey' to be defined but neither are defined`
       )
     }
-    const axiosResponse = await axios.post<R, AxiosResponse<R>, P>(
+    const axiosResponse = await axios.post<R, AxiosResponse<R>, ClientPost<D>>(
       url,
-      postData
+      post
     )
     return axiosResponse.data
   }
