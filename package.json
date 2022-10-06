@@ -1,6 +1,6 @@
 {
   "name": "@portive/client",
-  "version": "8.0.3",
+  "version": "9.0.0",
   "description": "Client to connect to and use Portive's cloud services for open source components",
   "keywords": [
     "client",
