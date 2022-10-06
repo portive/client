@@ -29,11 +29,16 @@ export function isHostedImage(file: File): boolean {
  * It works by creating an `Image` object, assigning the `url` to its `src`
  * and waiting for it to load then finding its `naturalWidth` and `naturalHeight`.
  */
-async function getImageSize(url: string): Promise<[number, number]> {
+async function getImageSize(
+  url: string
+): Promise<{ width: number; height: number }> {
   return new Promise((resolve) => {
     const image = new Image()
     image.addEventListener("load", function () {
-      resolve([this.naturalWidth, this.naturalHeight])
+      resolve({
+        width: this.naturalWidth,
+        height: this.naturalHeight,
+      })
     })
     image.src = url
   })
@@ -66,13 +71,14 @@ export async function createClientFile(
   }
   const objectUrl = URL.createObjectURL(file)
   if (isHostedImage(file)) {
-    const size = await getImageSize(objectUrl)
+    const imageSize = await getImageSize(objectUrl)
     const clientImageFile: ClientImageFile = {
       type: "image",
       filename: file.name,
       contentType: file.type,
       bytes: file.size,
-      size,
+      width: imageSize.width,
+      height: imageSize.height,
       file,
       objectUrl,
     }

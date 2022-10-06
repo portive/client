@@ -137,8 +137,9 @@ export async function uploadFile({
     clientFile.type === "image"
       ? {
           type: "image",
-          size: clientFile.size,
           url: fileUrl,
+          width: clientFile.width,
+          height: clientFile.height,
         }
       : {
           type: "generic",
