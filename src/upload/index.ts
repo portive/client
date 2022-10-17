@@ -9,7 +9,11 @@ import {
 } from "@portive/api-types"
 import { Client } from "../client"
 import { createClientFile } from "./create-client-file"
-import { UploadProgressEvent } from "./types"
+import {
+  UploadCompleteEvent,
+  UploadProgressEvent,
+  UploadStartEvent,
+} from "./types"
 import { UPLOAD_PATH } from "./constants"
 export * from "./create-client-file"
 export * from "../resize"
@@ -66,8 +70,6 @@ export async function getUploadPolicy({
   }
 }
 
-type UploadResponse = JSendError | JSendSuccess<HostedFileInfo>
-
 /**
  * This method can be used on its own for the entire upload process which
  * includes getting the upload policy and then sending the file to the
@@ -76,6 +78,9 @@ type UploadResponse = JSendError | JSendSuccess<HostedFileInfo>
 export async function uploadFile({
   client,
   file,
+  onStart = () => {
+    /* noop */
+  },
   onProgress,
   onComplete = () => {
     /* noop */
@@ -83,9 +88,10 @@ export async function uploadFile({
 }: {
   client: Client
   file: File
+  onStart?: (e: UploadStartEvent) => void
   onProgress?: (e: UploadProgressEvent) => void
-  onComplete?: (e: UploadResponse) => void
-}): Promise<UploadResponse> {
+  onComplete?: (e: UploadCompleteEvent) => void
+}): Promise<UploadCompleteEvent> {
   const clientFile = await createClientFile(file)
 
   const uploadPolicyResponse = await getUploadPolicy({
@@ -98,6 +104,15 @@ export async function uploadFile({
   }
 
   const { formFields, apiUrl: uploadUrl, fileUrl } = uploadPolicyResponse.data
+
+  /**
+   * Execute `onStart` callback
+   */
+  onStart({
+    url: fileUrl,
+    file,
+    clientFile,
+  })
 
   // upload file to Amazon
   const form = new FormData()

@@ -62,6 +62,9 @@ export default Web.Page<typeof getServerSideProps>(function Index({
       const result = await uploadFile({
         client,
         file,
+        onStart(e) {
+          console.log("onStart", e)
+        },
         onProgress(e) {
           console.log("onProgress", e)
         },
