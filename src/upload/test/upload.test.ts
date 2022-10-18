@@ -14,7 +14,7 @@ import axios from "axios"
 import {
   Client,
   createClientFile,
-  getUploadPolicy,
+  fetchUploadPolicy,
   getUploadPolicyFromClientFileInfo,
   uploadFile,
 } from "../.."
@@ -143,7 +143,7 @@ describe("fetchUploadPolicy", () => {
       })
     )
 
-    const result = await getUploadPolicy({
+    const result = await fetchUploadPolicy({
       client,
       file: textFile,
     })
@@ -215,17 +215,26 @@ describe("fetchUploadPolicy", () => {
       )
       .mockResolvedValueOnce(promised({ status: 204 }))
 
-    const onCompleteMock = jest.fn()
+    const onFinishMock = jest.fn()
 
     const result = await uploadFile({
       client,
       file: textFile,
-      onComplete: onCompleteMock,
+      onFinish: onFinishMock,
     })
 
     const EXPECTED_RESULT = {
-      status: "success",
-      data: {
+      type: "success",
+      file: expect.any(File),
+      clientFile: {
+        type: "generic",
+        filename: "alphabet.txt",
+        contentType: "text/plain",
+        bytes: 26,
+        file: expect.any(File),
+        objectUrl: expect.any(Object),
+      },
+      hostedFile: {
         type: "generic",
         url: "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
       },
@@ -234,8 +243,8 @@ describe("fetchUploadPolicy", () => {
     /**
      * Make sure the `onComplete` callback got called
      */
-    expect(onCompleteMock.mock.calls.length).toBe(1)
-    expect(onCompleteMock.mock.calls[0][0]).toEqual(EXPECTED_RESULT)
+    expect(onFinishMock.mock.calls.length).toBe(1)
+    expect(onFinishMock.mock.calls[0][0]).toEqual(EXPECTED_RESULT)
 
     /**
      * Make sure the `result` value is as expected
@@ -281,17 +290,26 @@ describe("fetchUploadPolicy", () => {
       )
       .mockResolvedValueOnce(promised({ status: 204 }))
 
-    const onCompleteMock = jest.fn()
+    const onFinishMock = jest.fn()
 
     const result = await uploadFile({
       client,
       file: textFile,
-      onComplete: onCompleteMock,
+      onFinish: onFinishMock,
     })
 
     const EXPECTED_RESULT = {
-      status: "success",
-      data: {
+      type: "success",
+      file: expect.any(File),
+      clientFile: {
+        type: "generic",
+        filename: "alphabet.txt",
+        contentType: "text/plain",
+        bytes: 26,
+        file: expect.any(File),
+        objectUrl: expect.any(Object),
+      },
+      hostedFile: {
         type: "generic",
         url: "https://files.dev.portive.com/f/on/2022/06/14/lrvexhununqz70xgb577m.txt",
       },
@@ -300,8 +318,8 @@ describe("fetchUploadPolicy", () => {
     /**
      * Make sure the `onComplete` callback got called
      */
-    expect(onCompleteMock.mock.calls.length).toBe(1)
-    expect(onCompleteMock.mock.calls[0][0]).toEqual(EXPECTED_RESULT)
+    expect(onFinishMock.mock.calls.length).toBe(1)
+    expect(onFinishMock.mock.calls[0][0]).toEqual(EXPECTED_RESULT)
 
     /**
      * Make sure the `result` value is as expected

@@ -62,21 +62,30 @@ export default Web.Page<typeof getServerSideProps>(function Index({
       const result = await uploadFile({
         client,
         file,
-        onStart(e) {
+        onBeforeFetch(e) {
+          console.log("onBeforeStart", e)
+        },
+        onBeforeSend(e) {
           console.log("onStart", e)
         },
         onProgress(e) {
           console.log("onProgress", e)
         },
-        onComplete(e) {
-          console.log("onComplete", e)
+        onSuccess(e) {
+          console.log("onSuccess", e)
+        },
+        onError(e) {
+          console.log("onError", e)
+        },
+        onFinish(e) {
+          console.log("onFinish", e)
         },
       })
       if (result) {
         console.log("result", result)
       }
-      if (result.status === "success") {
-        setHostedFileInfo(result.data)
+      if (result.type === "success") {
+        setHostedFileInfo(result.hostedFile)
       }
     },
     [authType]

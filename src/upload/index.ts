@@ -2,17 +2,18 @@ import axios from "axios"
 import {
   ClientFileInfo,
   HostedFileInfo,
-  JSendError,
-  JSendSuccess,
   UploadFileResponse,
   UploadProps,
 } from "@portive/api-types"
 import { Client } from "../client"
 import { createClientFile } from "./create-client-file"
 import {
-  UploadCompleteEvent,
+  UploadBeforeFetchEvent,
   UploadProgressEvent,
-  UploadStartEvent,
+  UploadBeforeSendEvent,
+  UploadFinishEvent,
+  UploadErrorEvent,
+  UploadSuccessEvent,
 } from "./types"
 import { UPLOAD_PATH } from "./constants"
 export * from "./create-client-file"
@@ -39,7 +40,7 @@ export async function getUploadPolicyFromClientFileInfo({
   }
 }
 
-export async function getUploadPolicy({
+export async function fetchUploadPolicy({
   client,
   file,
 }: {
@@ -78,40 +79,81 @@ export async function getUploadPolicy({
 export async function uploadFile({
   client,
   file,
-  onStart = () => {
+  onBeforeFetch = () => {
     /* noop */
   },
-  onProgress,
-  onComplete = () => {
+  onBeforeSend = () => {
+    /* noop */
+  },
+  onProgress = () => {
+    /* noop */
+  },
+  onError = () => {
+    /* noop */
+  },
+  onSuccess = () => {
+    /* noop */
+  },
+  onFinish = () => {
     /* noop */
   },
 }: {
   client: Client
   file: File
-  onStart?: (e: UploadStartEvent) => void
+  // before we get the upload policy
+  onBeforeFetch?: (e: UploadBeforeFetchEvent) => void
+  // once we start uploading to AWS S3
+  onBeforeSend?: (e: UploadBeforeSendEvent) => void
+  // progress updates
   onProgress?: (e: UploadProgressEvent) => void
-  onComplete?: (e: UploadCompleteEvent) => void
-}): Promise<UploadCompleteEvent> {
+  // error
+  onError?: (e: UploadErrorEvent) => void
+  // success
+  onSuccess?: (e: UploadSuccessEvent) => void
+  // Called on `error` or `success` event
+  onFinish?: (e: UploadFinishEvent) => void
+}): Promise<UploadFinishEvent> {
   const clientFile = await createClientFile(file)
 
-  const uploadPolicyResponse = await getUploadPolicy({
+  onBeforeFetch({ type: "beforeFetch", file, clientFile })
+
+  const uploadPolicyResponse = await fetchUploadPolicy({
     client,
     file,
   })
 
   if (uploadPolicyResponse.status === "error") {
-    return uploadPolicyResponse
+    const errorEvent: UploadErrorEvent = {
+      type: "error",
+      file,
+      clientFile,
+      message: uploadPolicyResponse.message,
+    }
+    onError(errorEvent)
+    onFinish(errorEvent)
+    return errorEvent
   }
 
   const { formFields, apiUrl: uploadUrl, fileUrl } = uploadPolicyResponse.data
 
+  const hostedFile: HostedFileInfo =
+    clientFile.type === "image"
+      ? {
+          type: "image",
+          url: fileUrl,
+          width: clientFile.width,
+          height: clientFile.height,
+        }
+      : { type: "generic", url: fileUrl }
+
   /**
    * Execute `onStart` callback
    */
-  onStart({
-    url: fileUrl,
+  onBeforeSend({
+    type: "beforeSend",
     file,
     clientFile,
+    hostedFile,
   })
 
   // upload file to Amazon
@@ -127,43 +169,38 @@ export async function uploadFile({
    */
   const uploadResponse = await axios.post(uploadUrl, form, {
     onUploadProgress(e) {
-      if (onProgress == null) return
       onProgress({
+        type: "progress",
+        file,
         clientFile,
-        file: clientFile.file,
+        hostedFile,
         sentBytes: e.loaded,
         totalBytes: e.total,
       })
     },
   })
   if (uploadResponse.status !== 204) {
-    const errorResponse: JSendError = {
-      status: "error",
+    const errorEvent: UploadErrorEvent = {
+      type: "error",
+      file,
+      clientFile,
       message: `Error during upload ${JSON.stringify(
         uploadResponse.data,
         null,
         2
       )}`,
     }
-    onComplete(errorResponse)
-    return errorResponse
+    onError(errorEvent)
+    onFinish(errorEvent)
+    return errorEvent
   }
-  const hostedFileInfo: HostedFileInfo =
-    clientFile.type === "image"
-      ? {
-          type: "image",
-          url: fileUrl,
-          width: clientFile.width,
-          height: clientFile.height,
-        }
-      : {
-          type: "generic",
-          url: fileUrl,
-        }
-  const successResponse: JSendSuccess<HostedFileInfo> = {
-    status: "success",
-    data: hostedFileInfo,
+  const successEvent: UploadSuccessEvent = {
+    type: "success",
+    file,
+    clientFile,
+    hostedFile,
   }
-  onComplete(successResponse)
-  return successResponse
+  onSuccess(successEvent)
+  onFinish(successEvent)
+  return successEvent
 }
