@@ -1,23 +1,25 @@
-import axios from "axios"
 import {
   ClientFileInfo,
   HostedFileInfo,
   UploadFileResponse,
   UploadProps,
 } from "@portive/api-types"
-import { Client } from "../client"
-import { createClientFile } from "./create-client-file"
 import {
   UploadBeforeFetchEvent,
-  UploadProgressEvent,
   UploadBeforeSendEvent,
-  UploadFinishEvent,
   UploadErrorEvent,
+  UploadFinishEvent,
+  UploadProgressEvent,
   UploadSuccessEvent,
 } from "./types"
+
+import { Client } from "../client"
 import { UPLOAD_PATH } from "./constants"
+import axios from "axios"
+import { createClientFile } from "./create-client-file"
 export * from "./create-client-file"
 export * from "../resize"
+export * from "./types"
 
 export async function getUploadPolicyFromClientFileInfo({
   client,
