@@ -1,5 +1,7 @@
 import { ClientFile, HostedFileInfo } from "@portive/api-types"
 
+export type { ClientFile, HostedFileInfo }
+
 /**
  * Called when the upload is intiated, before fetching the upload policy which
  * is required for uploading the file to the servers.
