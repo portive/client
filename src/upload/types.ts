@@ -65,3 +65,10 @@ export type UploadSuccessEvent = {
  * in a successful upload or in an error.
  */
 export type UploadFinishEvent = UploadSuccessEvent | UploadErrorEvent
+
+export type UploadEvent =
+  | UploadBeforeFetchEvent
+  | UploadBeforeSendEvent
+  | UploadProgressEvent
+  | UploadErrorEvent
+  | UploadSuccessEvent

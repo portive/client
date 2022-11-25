@@ -8,6 +8,7 @@ import {
   UploadBeforeFetchEvent,
   UploadBeforeSendEvent,
   UploadErrorEvent,
+  UploadEvent,
   UploadFinishEvent,
   UploadProgressEvent,
   UploadSuccessEvent,
@@ -99,6 +100,9 @@ export async function uploadFile({
   onFinish = () => {
     /* noop */
   },
+  onUpdate = () => {
+    /* noop */
+  },
 }: {
   client: Client
   file: File
@@ -114,10 +118,19 @@ export async function uploadFile({
   onSuccess?: (e: UploadSuccessEvent) => void
   // Called on `error` or `success` event
   onFinish?: (e: UploadFinishEvent) => void
+  // Called on any change in upload state
+  onUpdate?: (e: UploadEvent) => void
 }): Promise<UploadFinishEvent> {
   const clientFile = await createClientFile(file)
 
-  onBeforeFetch({ type: "beforeFetch", file, clientFile })
+  const beforeFetchEvent: UploadBeforeFetchEvent = {
+    type: "beforeFetch",
+    file,
+    clientFile,
+  }
+
+  onBeforeFetch(beforeFetchEvent)
+  onUpdate(beforeFetchEvent)
 
   const uploadPolicyResponse = await fetchUploadPolicy({
     client,
@@ -133,6 +146,7 @@ export async function uploadFile({
     }
     onError(errorEvent)
     onFinish(errorEvent)
+    onUpdate(errorEvent)
     return errorEvent
   }
 
@@ -151,12 +165,13 @@ export async function uploadFile({
   /**
    * Execute `onStart` callback
    */
-  onBeforeSend({
+  const beforeSendEvent: UploadBeforeSendEvent = {
     type: "beforeSend",
     file,
     clientFile,
     hostedFile,
-  })
+  }
+  onBeforeSend(beforeSendEvent)
 
   // upload file to Amazon
   const form = new FormData()
@@ -171,14 +186,16 @@ export async function uploadFile({
    */
   const uploadResponse = await axios.post(uploadUrl, form, {
     onUploadProgress(e) {
-      onProgress({
+      const progressEvent: UploadProgressEvent = {
         type: "progress",
         file,
         clientFile,
         hostedFile,
         sentBytes: e.loaded,
         totalBytes: e.total,
-      })
+      }
+      onProgress(progressEvent)
+      onUpdate(progressEvent)
     },
   })
   if (uploadResponse.status !== 204) {
@@ -194,6 +211,7 @@ export async function uploadFile({
     }
     onError(errorEvent)
     onFinish(errorEvent)
+    onUpdate(errorEvent)
     return errorEvent
   }
   const successEvent: UploadSuccessEvent = {
@@ -204,5 +222,6 @@ export async function uploadFile({
   }
   onSuccess(successEvent)
   onFinish(successEvent)
+  onUpdate(successEvent)
   return successEvent
 }
