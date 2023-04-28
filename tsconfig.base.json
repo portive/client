@@ -33,7 +33,7 @@
      *
      * - `target` and `lib` for modern JavaScript
      */
-    "target": "esnext",
+    "target": "es6",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     /**

@@ -28,3 +28,5 @@ tsconfig.tsbuildinfo
 # ignore dotenv environment variables
 # ignore build/dist directories
 # ignore Next.js directory
+
+.vscode/
